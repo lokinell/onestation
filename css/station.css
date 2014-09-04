@@ -1,0 +1,11 @@
+#container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+#stage {
+    width: 400px;
+    height: 400px;
+    background-color: cornflowerblue;
+}
