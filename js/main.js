@@ -87,7 +87,9 @@
             }
         }
 
-        var monitoring = function(d, top){
+        var monitorAction = function(param){
+            var d = param.d;
+            var top = param.top;
             updateInterval = setInterval(function () {
                 for (var i in stage.sprites) {
                     var spr = stage.sprites[i];
@@ -99,7 +101,41 @@
                         spr.y = top - (dh/2);
                     }
                 }
-            }, rendSpeed*3);//这里是50帧每秒
+            }, rendSpeed*3);
+        }
+
+        var thinkAction = function(param){
+            var point = 0;
+            var step = -1;
+            var d = param.d;
+            var top = param.top;
+
+            updateInterval = setInterval(function () {
+                var sprs = stage.sprites;
+                var sprCount = sprs.length;
+                // 复位
+                for (var i = point -1; i<=point + 1; i++) {
+                    var spr = sprs[i];
+                    if(spr){
+                        spr.setHeight(d);
+                        spr.y = top;
+                    }
+                }
+
+                if(point >= sprCount-1 || point <= 0){
+                    step = -step;
+                }
+
+                point = point + step;
+                var dh = [d, d+d, d]; // 三个块分别改变的高度
+                for (var i = point -1, j=0; i<=point + 1; i++,j++) {
+                    var spr = sprs[i];
+                    if(spr){
+                        spr.setHeight(d+dh[j]);
+                        spr.y = top - (dh[j]/2);
+                    }
+                }
+            }, rendSpeed*5);
         }
 
 
@@ -118,21 +154,21 @@
                 spr.setHeight(d);
             }
 
-            setTimeout(actionFunc, 1000, d, top);
+            setTimeout(actionFunc, 1000, {"d":d, "top":top});
         }
 
         $("#monitorBtn").on("click", function () {
             console.log("start mornitoring...");
             restart();
             createRectangles(20, 20);
-            setTimeout(lineSmallRectangles, 1000, monitoring);
+            setTimeout(lineSmallRectangles, 2000, monitorAction);
         });
 
         $("#thinkBtn").on("click", function () {
             console.log("start thinking...");
             restart();
             createRectangles(20, 20);
-            setTimeout(lineSmallRectangles, 2000);
+            setTimeout(lineSmallRectangles, 2000, thinkAction);
         });
     });
 
