@@ -51,18 +51,19 @@
                         stage.sprites[i].move()
                     }
                 }
-            }, 20);//这里是50帧每秒
+            }, 50);
 
             function createCircle() {
                 var x = getRandomInt(0, w);
-                var y = getRandomInt(0, h);
+                var y = getRandomInt(h/2, h);
                 var radius = getRandomInt(2, 20);
                 var a = radius / 20.0;
                 var circle = new Circle(ctx, x, y, radius, {strokeStyle: "rgba(255,255,255," + a + ")"});
-                var speedX = getRandomArbitrary(-1, 1);
-                var speedY = getRandomArbitrary(-1, 1);
+                var speedX = 0; // 水平方向速度不变
+                var speedY = -1 * a;
                 circle.speed = {x: speedX, y: speedY};
-                if (stage.sprites.length < 20) {
+                var count = getRandomInt(20, 30)
+                if (stage.sprites.length < count) {
                     stage.addSprite(circle);
                 } else {
                     stage.deleteSprite();
