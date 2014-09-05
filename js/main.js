@@ -13,6 +13,8 @@
         return  newVar;
     }
 
+    var rendSpeed = 20; //50帧每秒
+
     $(document).ready(function () {
         var ctx = $("canvas").get(0).getContext('2d');
         var w = ctx.canvas.width;
@@ -51,7 +53,7 @@
                         stage.sprites[i].move()
                     }
                 }
-            }, 20);
+            }, rendSpeed);
 
             function createCircle() {
                 var x = getRandomInt(0, w);
@@ -70,7 +72,7 @@
                 }
             }
 
-            generatorInterval = setInterval(createCircle, 50);
+            generatorInterval = setInterval(createCircle, rendSpeed);
         });
 
         $("#monitorBtn").on("click", function () {
@@ -117,7 +119,7 @@
                             spr.y = top - (dh/2);
                         }
                     }
-                }, 20);//这里是50帧每秒
+                }, rendSpeed);//这里是50帧每秒
 
             }
 
