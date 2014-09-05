@@ -75,59 +75,64 @@
             generatorInterval = setInterval(createCircle, rendSpeed);
         });
 
-        $("#monitorBtn").on("click", function () {
-            console.log("start mornitoring...");
-            restart();
 
-            function createRectangle() {
-                var d = 20;
-                var left = (w - d) / 2;
-                var top = (h - d) / 2;
-
+        function createRectangles(count, width) {
+            var d = width;
+            var left = (w - d) / 2;
+            var top = (h - d) / 2;
+            for (var i = 0; i < count; i++) {
                 var rect = new Rectangle(ctx, left, top, d, d);
                 rect.speed = {x: 0, y: 0};
                 stage.addSprite(rect);
             }
+        }
 
-            for (var i = 0; i < 15; i++) {
-                createRectangle();
-            }
-
-            function lineSmallRectangles() {
-                var sprites = stage.sprites;
-                var len = sprites.length;
-                var d = 10;
-                var span = 15;
-                var left = (w - (span * len)) / 2;
-                var top = (h - d) / 2;
-
-                for(var i=0; i<len; i++){
-                    var spr = sprites[i];
-                    spr.moveTo(left+(i*span), top);
-                    spr.setWidth(d);
-                    spr.setHeight(d/2);
-                }
-
-                updateInterval = setInterval(function () {
-                    for (var i in stage.sprites) {
-                        var spr = stage.sprites[i];
-                        if (spr) {
-                            var oldH = spr.h;
-                            var h = getRandomInt(0, 30);
-                            spr.setHeight(h);
-                            var dh = h - oldH;
-                            spr.y = top - (dh/2);
-                        }
+        var monitoring = function(d, top){
+            updateInterval = setInterval(function () {
+                for (var i in stage.sprites) {
+                    var spr = stage.sprites[i];
+                    if (spr) {
+                        var oldH = spr.h;
+                        var h = getRandomInt(2, d*3);
+                        spr.setHeight(h);
+                        var dh = h - oldH;
+                        spr.y = top - (dh/2);
                     }
-                }, rendSpeed);//这里是50帧每秒
+                }
+            }, rendSpeed*3);//这里是50帧每秒
+        }
 
+
+        function lineSmallRectangles(actionFunc) {
+            var sprites = stage.sprites;
+            var len = sprites.length;
+            var d = 10;
+            var span = 15;
+            var left = (w - (span * len)) / 2;
+            var top = (h - d) / 2;
+
+            for(var i=0; i<len; i++){
+                var spr = sprites[i];
+                spr.moveTo(left+(i*span), top);
+                spr.setWidth(d);
+                spr.setHeight(d);
             }
 
-            setTimeout(lineSmallRectangles, 1000);
+            setTimeout(actionFunc, 1000, d, top);
+        }
+
+        $("#monitorBtn").on("click", function () {
+            console.log("start mornitoring...");
+            restart();
+            createRectangles(20, 20);
+            setTimeout(lineSmallRectangles, 1000, monitoring);
         });
 
         $("#thinkBtn").on("click", function () {
             console.log("start thinking...");
+            restart();
+            createRectangles(20, 20);
+            setTimeout(lineSmallRectangles, 2000);
         });
     });
 
