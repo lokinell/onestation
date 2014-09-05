@@ -82,7 +82,7 @@
                 var left = (w - d) / 2;
                 var top = (h - d) / 2;
 
-                var rect = new Rectangle(ctx, left, top, d, d / 2);
+                var rect = new Rectangle(ctx, left, top, d, d);
                 rect.speed = {x: 0, y: 0};
                 stage.addSprite(rect);
             }
