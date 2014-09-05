@@ -31,7 +31,6 @@ var Stage = function (ctx /*canvas object*/) {
 
         stop: function () {
             this.sprites = [];
-            ctx.clearRect(-w, -h, w+w, h+h);
             clearInterval(this.interval);
         },
 
