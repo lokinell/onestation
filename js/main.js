@@ -51,7 +51,7 @@
                         stage.sprites[i].move()
                     }
                 }
-            }, 50);
+            }, 20);
 
             function createCircle() {
                 var x = getRandomInt(0, w);
@@ -70,7 +70,7 @@
                 }
             }
 
-            generatorInterval = setInterval(createCircle, 100);
+            generatorInterval = setInterval(createCircle, 50);
         });
 
         $("#monitorBtn").on("click", function () {
@@ -117,7 +117,7 @@
                             spr.y = top - (dh/2);
                         }
                     }
-                }, 100);//这里是50帧每秒
+                }, 20);//这里是50帧每秒
 
             }
 
